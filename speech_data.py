@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import wave
+from pydub import AudioSegment
 
 import numpy
 import numpy as np
@@ -40,14 +41,15 @@ def wave_batch_generator(batch_size, path, label): #speaker
 		shuffle(files)
 		print("loaded batch of %d files" % len(files))
 		for wav in files:
+			print(wav)
 			if not wav.endswith(".wav"):continue
 			labels.append(label)
 			chunk = load_wav_file(path+wav)
 			batch_waves.append(chunk)
 			# batch_waves.append(chunks[input_width])
 			if len(batch_waves) >= batch_size:
-				batch_waves = np.reshape(batch_waves, [-1, 1, 8192])
-				labels = np.reshape(labels, [-1, 1])
+				batch_waves = np.reshape(batch_waves, [2, 1, 8192])
+				labels = np.reshape(labels, [2, 2])
 				yield batch_waves, labels
 				batch_waves = []  # Reset for next batch
 				labels = []
