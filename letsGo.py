@@ -3,20 +3,26 @@ import tflearn
 
 import speech_data
 
-from constants import positive_path, negative_path
+import numpy as np
+
+
+from constants import POSITIVE_PATH, NEGATIVE_PATH
 
 
 
 learning_rate = 0.03
-training_iters = 100  # steps
-batch_size = 10
+training_iters = 10  # steps
+batch_size = 2
 
-width = 20  # mfcc features
-height = 80  # (max) length of utterance
+width = 1
+height = 8192  # (max) length of utterance
 classes = 1  # digits
 
-positive_batch = word_batch = speech_data.wave_batch_generator(batch_size, positive_path, 1)
-negative_batch = word_batch = speech_data.wave_batch_generator(batch_size, negative_path, 0)
+positive_batch = word_batch = speech_data.wave_batch_generator(batch_size, POSITIVE_PATH, 1)
+negative_batch = word_batch = speech_data.wave_batch_generator(batch_size, NEGATIVE_PATH, 0)
+#positive_batch = np.reshape(positive_batch, (1, 10, 8192))
+#negative_batch = np.reshape(negative_batch, (1, 10, 8192))
+
 
 # Network building
 net = tflearn.input_data([None, width, height])
@@ -30,14 +36,19 @@ for x in tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES): tf.add_to_collecti
 
 # Training
 
-while --training_iters > 0:
+while training_iters > 0:
 	trainX, trainY = next(positive_batch)
 	testX, testY = next(positive_batch)  # todo: proper ;)
-	model.fit(trainX, trainY, n_epoch=10, validation_set=(testX, testY), show_metric=True, batch_size=batch_size)
+	model.fit(trainX, trainY, n_epoch=2, validation_set=(testX, testY), show_metric=True, batch_size=batch_size)
 	trainX, trainY = next(negative_batch)
 	testX, testY = next(negative_batch)  # todo: proper ;)
-	model.fit(trainX, trainY, n_epoch=10, validation_set=(testX, testY), show_metric=True, batch_size=batch_size)
+	model.fit(trainX, trainY, n_epoch=2, validation_set=(testX, testY),  show_metric=True, batch_size=batch_size)
+	training_iters -= 1
+	print("THE CURRENT TRAINING ITER IS", training_iters)
 
 model.save("tflearn.lstm.model")
-_y = model.predict(next(negative_batch)[0])  # << add your own voice here
+_y = model.predict(next(positive_batch)[0])  # << add your own voice here
+_z = model.predict(next(negative_batch)[0])  # << add your own voice here
+
 print (_y)
+print(_z)

@@ -6,6 +6,7 @@ import wave
 import numpy
 import numpy as np
 
+import tensorflow as tf
 from random import shuffle
 
 CHUNK = 4096
@@ -45,6 +46,8 @@ def wave_batch_generator(batch_size, path, label): #speaker
 			batch_waves.append(chunk)
 			# batch_waves.append(chunks[input_width])
 			if len(batch_waves) >= batch_size:
+				batch_waves = np.reshape(batch_waves, [-1, 1, 8192])
+				labels = np.reshape(labels, [-1, 1])
 				yield batch_waves, labels
 				batch_waves = []  # Reset for next batch
 				labels = []

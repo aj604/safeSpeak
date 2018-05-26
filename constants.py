@@ -9,5 +9,5 @@
 #
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
-POSITIVE_PATH = '/putstuffhere'
-NEGATIVE_PATH = '/putmeanstuffhere'
+POSITIVE_PATH = 'positive/'
+NEGATIVE_PATH = 'negative/'
