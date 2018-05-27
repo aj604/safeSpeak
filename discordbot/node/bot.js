@@ -25,7 +25,8 @@ var currentFileName = "";
 // save audio as wav file
 function generateOutputFile(channel, member) {
     // use IDs instead of username cause some people have stupid emojis in their name
-    const fileName = `./recordings/${channel.id}-${member.id}-${Date.now()}.wav`;
+    //const fileName = `../../newNet/spoken-language-identification/liveResults/${channel.id}-${member.id}-${Date.now()}.wav`;
+    const fileName = `../../newNet/spoken-language-identification/liveResults/predictFile.wav`;
     currentFileName = fileName;
     var outputFileStream = new FileWriter(fileName);
     return outputFileStream;
