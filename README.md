@@ -6,12 +6,12 @@ Created By: Nafeh Shoaib, Avery Jones, and Devin Owens
 A framework designed, using a Deep Learning Model with Recurrent Neural Networks (RNN) and implemented as a Discord Bot, to monitor voice communication in online communities to identify sexism and harassment. Training data was compiled as a simple yes or no audio dataset converted to spectograph images to demonstrate the nueral network's ability to differentiate between audio patterns and identify words and understand meaning.
 
 ## To install:
-1. Change to the discord bot directory
+1. Change to the discordbot/node directory
 ```shell
-cd discordbot && cd node
+cd discordbot/node
 ```
 
-2. Change discord bot app id in botsettings.json to your own from discordapp.com/developers/applications
+2. Change discord bot app id in botsettings.json to your own from https://www.discordapp.com/developers/applications
 
 3. Check if NodeJS is up to date:
 ```shell
